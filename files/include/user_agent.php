@@ -1,10 +1,9 @@
 <?php
 
-
 function ua_get_filename($name, $folder)
 {
 	global $pun_config;
-	
+
 	$name = strtolower($name);
 	$name = str_replace(' ', '', $name); // remove spaces
 	$name = preg_replace('/[^a-z0-9_]/', '', $name); // remove special characters
@@ -34,15 +33,15 @@ function get_useragent_names($useragent)
 		);
 		return $result;
 	}
-	
+
 	$browser_img = '';
 	$browser_version = '';
-	
+
 	$useragent = strtolower($useragent);
-	
+
 	// Browser detection
-	$browsers = array('AWeb', 'Camino', 'Epiphany', 'Galeon', 'HotJava', 'iCab', 'MSIE', 'Chrome', 'Safari', 'Konqueror', 'Flock', 'Iceweasel', 'SeaMonkey', 'Firefox', 'Firebird', 'Netscape', 'Mozilla', 'Opera', 'Maxthon', 'PhaseOut', 'SlimBrowser');
-	
+	$browsers = array('Arora', 'AWeb', 'Camino', 'Epiphany', 'Galeon', 'HotJava', 'iCab', 'MSIE', 'Maxthon', 'Chrome', 'Safari', 'Konqueror', 'Flock', 'Iceweasel', 'SeaMonkey', 'Firebird', 'Netscape', 'Firefox', 'Mozilla', 'Opera', 'PhaseOut', 'SlimBrowser');
+
 	$browser = ua_search_for_item($browsers, $useragent);
 
 	preg_match('#'.preg_quote(strtolower(($browser == 'Opera' ? 'Version' : $browser))).'[\s/]*([\.0-9]*)#', $useragent, $matches);
@@ -50,16 +49,19 @@ function get_useragent_names($useragent)
 
 	if ($browser == 'MSIE')
 	{
-		if (intval($browser_version) > 6)
+		if (intval($browser_version) >= 9)
+			$browser_img = 'Internet Explorer 9';
+		else if (intval($browser_version) >= 7)
 			$browser_img = 'Internet Explorer 7';
+
 		$browser = 'Internet Explorer';
 	}
-	
+
 	// System detection
 	$systems = array('Amiga', 'BeOS', 'FreeBSD', 'HP-UX', 'Linux', 'NetBSD', 'OS/2', 'SunOS', 'Symbian', 'Unix', 'Windows', 'Sun', 'Macintosh', 'Mac');
-	
+
 	$system = ua_search_for_item($systems, $useragent);
-	
+
 	if ($system == 'Linux')
 	{
 		$systems = array('CentOS', 'Debian', 'Fedora', 'Freespire', 'Gentoo', 'Katonix', 'KateOS', 'Knoppix', 'Kubuntu', 'Linspire', 'Mandriva', 'Mandrake', 'RedHat', 'Slackware', 'Slax', 'Suse', 'Xubuntu', 'Ubuntu', 'Xandros', 'Arch', 'Ark');
@@ -67,7 +69,7 @@ function get_useragent_names($useragent)
 		$system = ua_search_for_item($systems, $useragent);
 		if ($system == '')
 			$system = 'Linux';
-		
+
 		if ($system == 'Mandrake')
 			$system = 'Mandriva';
 	}
@@ -80,8 +82,10 @@ function get_useragent_names($useragent)
 		{
 			if (substr($version, 0, 3) == 6.0)
 				$system = 'Windows Vista';
-			else
+			else if (substr($version, 0, 3) == 6.1)
 				$system = 'Windows 7';
+			else
+				$system = 'Windows 8';
 		}
 	}
 	elseif ($system == 'Mac')

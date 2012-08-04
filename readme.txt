@@ -2,10 +2,10 @@
 ##
 ##        Mod title:  User agent
 ##
-##      Mod version:  1.2.2
-##  Works on FluxBB:  1.4.8, 1.4.7, 1.4.6, 1.4.5, 1.4.4, 1.4.3, 1.4.2, 1.4.1, 1.4.0, 1.4-rc3
-##     Release date:  2012-01-21
-##      Review date:  2012-01-21
+##      Mod version:  1.3
+##  Works on FluxBB:  1.5.0, 1.5-beta, 1.4.9, 1.4.8, 1.4.7
+##     Release date:  2012-08-04
+##      Review date:  2012-08-04
 ##           Author:  Daris (daris91@gmail.com)
 ##
 ##      Description:  Adds a browser and system icon into each new post
