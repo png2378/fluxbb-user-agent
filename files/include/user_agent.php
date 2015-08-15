@@ -40,7 +40,7 @@ function get_useragent_names($useragent)
 	$useragent = strtolower($useragent);
 
 	// Browser detection
-	$browsers = array('Arora', 'AWeb', 'Camino', 'Epiphany', 'Galeon', 'HotJava', 'iCab', 'MSIE', 'Maxthon', 'Chrome', 'Safari', 'Konqueror', 'Flock', 'Iceweasel', 'SeaMonkey', 'Firebird', 'Netscape', 'Firefox', 'Mozilla', 'Opera', 'PhaseOut', 'SlimBrowser');
+	$browsers = array('Edge', 'Vivaldi', 'YaBrowser', 'OPR', 'PaleMoon', 'QupZilla', 'Midori', 'Otter', 'Coast', 'IEMobile', 'Arora', 'AWeb', 'Camino', 'Epiphany', 'Galeon', 'HotJava', 'iCab', 'MSIE', 'Maxthon', 'Chromium', 'Chrome', 'Konqueror', 'Flock', 'Iceweasel', 'SeaMonkey', 'Firebird', 'Netscape', 'Firefox', 'Opera Mobi', 'Opera Mini', 'OPiOS', 'Opera', 'PhaseOut', 'SlimBrowser', 'Trident/7.0', 'UCBrowser', 'MiuiBrowser', 'WebPositive', 'Safari', 'Mozilla');
 
 	$browser = ua_search_for_item($browsers, $useragent);
 
@@ -57,14 +57,63 @@ function get_useragent_names($useragent)
 		$browser = 'Internet Explorer';
 	}
 
+	if ($browser == 'Trident/7.0')
+	{
+		$browser = 'Internet Explorer 11';
+		$browser_img = 'Internet Explorer 9';
+	}
+
+	if ($browser == 'IEMobile')
+	{
+		$browser = 'IE Mobile';
+		$browser_img = 'Internet Explorer 9';
+	}
+
+	if ($browser == 'OPR')
+	{
+		$browser = 'Opera';
+	}
+
+	if ($browser == 'Opera Mobi')
+	{
+		$browser = 'Opera Mobile';
+		$browser_img = 'Opera';
+	}
+
+	if ($browser == 'Opera Mini')
+	{
+		$browser_img = 'Opera';
+	}
+
+	if ($browser == 'OPiOS')
+	{
+		$browser = 'Opera Mini';
+		$browser_img = 'Opera';
+	}
+
 	// System detection
-	$systems = array('Amiga', 'BeOS', 'FreeBSD', 'HP-UX', 'Linux', 'NetBSD', 'OS/2', 'SunOS', 'Symbian', 'Unix', 'Windows', 'Sun', 'Macintosh', 'Mac');
+	$systems = array('Windows Phone', 'Android', 'Maemo', 'Series 60', 'iPhone', 'iPad', 'Amiga', 'FreeBSD', 'HP-UX', 'Linux', 'NetBSD', 'Series 40', 'Symbian', 'Unix', 'Windows', 'Mac OS X', 'Haiku');
 
 	$system = ua_search_for_item($systems, $useragent);
 
+	if ($system == 'Series 60')
+	{
+		$system = 'Symbian';
+	}
+
+	if ($system == 'iPhone')
+	{
+		$system = 'iOS';
+	}
+
+	if ($system == 'iPad')
+	{
+		$system = 'iOS';
+	}
+
 	if ($system == 'Linux')
 	{
-		$systems = array('CentOS', 'Debian', 'Fedora', 'Freespire', 'Gentoo', 'Katonix', 'KateOS', 'Knoppix', 'Kubuntu', 'Linspire', 'Mandriva', 'Mandrake', 'RedHat', 'Slackware', 'Slax', 'Suse', 'Xubuntu', 'Ubuntu', 'Xandros', 'Arch', 'Ark');
+		$systems = array('elementary OS', 'CentOS', 'Debian', 'Fedora', 'Gentoo', 'Knoppix', 'Kubuntu', 'Mandriva', 'Mandrake', 'RedHat', 'Slackware', 'Slax', 'Suse', 'Xubuntu', 'Ubuntu', 'Arch');
 
 		$system = ua_search_for_item($systems, $useragent);
 		if ($system == '')
@@ -84,13 +133,14 @@ function get_useragent_names($useragent)
 				$system = 'Windows Vista';
 			else if (substr($version, 0, 3) == 6.1)
 				$system = 'Windows 7';
-			else
+			else if (substr($version, 0, 3) == 6.2)
 				$system = 'Windows 8';
+			else if (substr($version, 0, 3) == 6.3)
+				$system = 'Windows 8.1';
+			else
+				$system = 'Windows 10';
 		}
 	}
-	elseif ($system == 'Mac')
-		$system = 'Macintosh';
-
 	if (!$system)
 		$system = 'Unknown';
 	if (!$browser)
@@ -130,7 +180,7 @@ function get_useragent_icons($useragent)
 
 	$desc = ($pun_user['is_admmod']) ? ' style="cursor: pointer" onclick="alert(\''.pun_htmlspecialchars(addslashes($useragent).'\n\nSystem:\t'.addslashes($agent['system']).'\nBrowser:\t'.addslashes($agent['browser_name'])).'\')"' : '';
 
-	$result = "\t\t\t\t\t\t".'<dd class="usercontacts"><span class="user-agent"'.$desc.'>'.$result.'</span></dd>'."\n";
+	$result = "\t\t\t\t\t\t".'<span style="float: right; margin-top: -3px"><span class="user-agent"'.$desc.'>'.$result.'</span></span>'."\n";
 	$user_agent_cache[$useragent] = $result;
 	return $result;
 }
