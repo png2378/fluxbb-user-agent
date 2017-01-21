@@ -180,7 +180,7 @@ function get_useragent_icons($useragent)
 
 	$desc = ($pun_user['is_admmod']) ? ' style="cursor: pointer" onclick="alert(\''.pun_htmlspecialchars(addslashes($useragent).'\n\nSystem:\t'.addslashes($agent['system']).'\nBrowser:\t'.addslashes($agent['browser_name'])).'\')"' : '';
 
-	$result = "\t\t\t\t\t\t".'<span style="float: right; margin-top: -3px"><span class="user-agent"'.$desc.'>'.$result.'</span></span>'."\n";
+	$result = "\t\t\t\t\t\t".'<dd class="usercontacts"><span class="user-agent"'.$desc.'>'.$result.'</span></dd>'."\n";
 	$user_agent_cache[$useragent] = $result;
 	return $result;
 }
